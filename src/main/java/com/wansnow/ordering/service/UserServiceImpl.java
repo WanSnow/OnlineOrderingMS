@@ -14,7 +14,7 @@ public class UserServiceImpl {
     @Autowired
     private UserDao userDao;
 
-    public User Login(String email, String password) {
+    public User login(String email, String password) {
         return userDao.findUserByEmailAndPassword(email, password);
     }
 
