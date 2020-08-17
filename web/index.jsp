@@ -15,7 +15,7 @@
     $(function () {
       $("#btn-login").on('click', function () {
         $.ajax({
-          url: "/OnlineOrderingMS/login",
+          url: "${pageContext.request.contextPath}/login",
           type: 'POST',
           data: {'username': $("#user").val(), 'password': $("#pwd").val()},
           success: function (data) {
@@ -29,7 +29,7 @@
     $(function () {
       $("#logout").on('click', function () {
         $.ajax({
-          url: "/OnlineOrderingMS/logout",
+          url: "${pageContext.request.contextPath}/logout",
           type: 'GET',
           success: function (data) {
             alert(data);
@@ -48,7 +48,7 @@
     if(user == null) {
   %>
   用户：<input type="email" id="user" align="邮箱">密码：<input type="password" id="pwd" align="密码">
-  <a href="#" id="btn-register">注册</a>
+  <a href="${pageContext.request.contextPath}/registryPage" id="btn-register">注册</a>
   <a href="#" id="btn-login">登陆</a>
   <%
   } else {

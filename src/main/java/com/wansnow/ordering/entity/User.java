@@ -58,4 +58,15 @@ public class User {
     public void setTel(String tel) {
         this.tel = tel;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", username='" + username + '\'' +
+                ", realName='" + realName + '\'' +
+                ", tel='" + tel + '\'' +
+                '}';
+    }
 }

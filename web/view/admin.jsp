@@ -14,7 +14,7 @@
         $(function () {
             $("#submit").on('click', function () {
                 $.ajax({
-                    url: "/OnlineOrderingMS/adminLogin",
+                    url: "${pageContext.request.contextPath}/adminLogin",
                     type: 'GET',
                     data: {'username': $("#username").val(), 'password': $("#password").val()},
                     success: function (data) {
