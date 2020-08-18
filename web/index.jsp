@@ -38,6 +38,7 @@
         });
       })
     });
+
   </script>
 </head>
 <body>
@@ -47,7 +48,7 @@
     User user = (User)session.getAttribute("user");
     if(user == null) {
   %>
-  用户：<input type="email" id="user" align="邮箱">密码：<input type="password" id="pwd" align="密码">
+  用户：<input type="email" id="user" placeholder="邮箱">密码：<input type="password" id="pwd" placeholder="密码">
   <a href="${pageContext.request.contextPath}/registryPage" id="btn-register">注册</a>
   <a href="#" id="btn-login">登陆</a>
   <%
@@ -58,7 +59,7 @@
   <%
     }
   %>
-  <a href="#" >查看店铺</a>
+  <a href="${pageContext.request.contextPath}/shop" >查看店铺</a>
 </div>
 <hr>
 <%--  主屏：--%>

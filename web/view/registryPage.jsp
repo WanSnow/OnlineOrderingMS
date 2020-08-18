@@ -37,15 +37,16 @@
             })
         });
 
-    </script></head>
+    </script>
+</head>
 <body>
 <div>
-    邮箱：<input type="text" id="email"><br>
-    密码：<input type="password" id="pwd"><br>
-    二次密码：<input type="password" id="pwd2"><br>
-    用户名：<input type="text" id="username"><br>
-    姓名：<input type="text" id="name"><br>
-    电话：<input type="text" id="tel"><br>
+    邮箱：<input type="text" id="email" placeholder="邮箱"><br>
+    密码：<input type="password" id="pwd" placeholder="密码"><br>
+    二次密码：<input type="password" id="pwd2" placeholder="请再次输入密码"><br>
+    用户名：<input type="text" id="username" placeholder="用户名"><br>
+    姓名：<input type="text" id="name" placeholder="你的真名"><br>
+    电话：<input type="text" id="tel" placeholder="电话"><br>
     <input type="submit" id="submit" value="注册">
     <input type="reset" value="重置">
 </div>

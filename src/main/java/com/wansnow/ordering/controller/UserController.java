@@ -50,7 +50,7 @@ public class UserController {
 
     @RequestMapping(value = "/registryPage", method = RequestMethod.GET)
     public String registryPage(){
-        return "registry";
+        return "registryPage";
     }
 
     @RequestMapping(value = "/registry", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
