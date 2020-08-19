@@ -1,5 +1,6 @@
 package com.wansnow.ordering.controller;
 
+import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.Shop;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
@@ -16,10 +17,10 @@ import javax.servlet.http.HttpSession;
 public class ShopController {
     @Autowired
     private HttpSession session;
-
     @Autowired
     private ShopServiceImpl shopService;
 
+    //下面是servlet
     @Resource(name = "shop")
     private SnowFlake shopIdGenerator;
 
@@ -45,6 +46,7 @@ public class ShopController {
         Shop shop = shopService.login(shopId, pwd);
         if(shop!=null&&shop.getShopId()!=null&&shop.getShopId()!=""){
             session.setAttribute("shop",shop);
+            session.setAttribute("dishLists",shopService.getAllDish(shopId));
             return "登录成功！";
         }else {
             return "店铺ID或密码错误！";
@@ -83,5 +85,25 @@ public class ShopController {
             return "注册失败!";
         }
         return "注册成功！你的店铺ID是："+ shop.getShopId() +"。请牢记！";
+    }
+
+    @RequestMapping(path = "/updateDishList", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateDishList(DishList dishList){
+        if(shopService.updateDishList(dishList)){
+            return "修改成功！";
+        }else {
+            return "修改失败！";
+        }
+    }
+
+    @RequestMapping(path = "/deleteDishList", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String deleteDishList(String dishId){
+        if(shopService.deleteDishList(dishId)){
+            return "删除成功！";
+        }else {
+            return "删除失败！";
+        }
     }
 }

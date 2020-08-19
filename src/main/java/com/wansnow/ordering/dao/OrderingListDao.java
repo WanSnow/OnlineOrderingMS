@@ -17,6 +17,16 @@ public class OrderingListDao implements OrderingListDaoImpl {
     }
 
     @Override
+    public OrderingList findOrderingListByShopId(String shopId) {
+        return null;
+    }
+
+    @Override
+    public OrderingList findOrderingListByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public boolean insertOrdering(OrderingList list) {
         return false;
     }
