@@ -28,7 +28,7 @@ public class ShopDao implements ShopDaoImpl {
                 shop.setOwnerName(resultSet.getString("owner_name"));
                 shop.setTel(resultSet.getString("tel"));
                 shop.setAddr(resultSet.getString("addr"));
-                shop.setVerify(resultSet.getBoolean("shop_id"));
+                shop.setVerify(resultSet.getBoolean("is_verify"));
             }
         });
         return shop;

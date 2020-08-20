@@ -24,6 +24,8 @@ public class ShopServiceImpl {
         return shopDao.insertShop(shop)!=0;
     }
 
+    public DishList getDish(String dishId){return dishListDao.findDishListByDishId(dishId);}
+
     public List<DishList> getAllDish(String shopId){
         return dishListDao.findDishListByShopId(shopId);
     }

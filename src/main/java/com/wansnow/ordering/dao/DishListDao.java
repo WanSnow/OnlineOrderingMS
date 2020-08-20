@@ -3,6 +3,7 @@ package com.wansnow.ordering.dao;
 import com.wansnow.ordering.dao.impl.DishListDaoImpl;
 import com.wansnow.ordering.entity.DishList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
@@ -21,19 +22,23 @@ public class DishListDao implements DishListDaoImpl {
 
     @Override
     public List<DishList> findDishListByShopId(String shopId) {
-        String sql = "SELECT * FROM dish_list WHERE shop_id='" + shopId + "'";
-        List<Object> queryList = new ArrayList<>();
-        List<DishList> dishLists = jdbcTemplate.query(sql,new RowMapper<DishList>() {
-            public DishList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                DishList dish = new DishList();
-                dish.setDishId(resultSet.getString("dish_id"));
-                dish.setShopId(resultSet.getString("shop_id"));
-                dish.setDishName(resultSet.getString("dish_name"));
-                dish.setPrice(resultSet.getString("price"));
-                dish.setDishImage(resultSet.getString("dish_image"));
-                return dish;
-            }
-        },queryList.toArray());
+//        String sql = "SELECT * FROM dish_list WHERE shop_id='" + shopId + "'";
+////        List<Object> queryList = new ArrayList<>();
+////        List<DishList> dishLists = jdbcTemplate.query(sql,new RowMapper<DishList>() {
+////            public DishList mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+////                DishList dish = new DishList();
+////                dish.setDishId(resultSet.getString("dish_id"));
+////                dish.setShopId(resultSet.getString("shop_id"));
+////                dish.setDishName(resultSet.getString("dish_name"));
+////                dish.setPrice(resultSet.getString("price"));
+////                dish.setDishImage(resultSet.getString("dish_image"));
+////                return dish;
+////            }
+////        },queryList.toArray());
+        String sql = "select * from dish_list where shop_id ='" + shopId + "'";
+        RowMapper<DishList> rowMapper = new BeanPropertyRowMapper<>(DishList.class);
+        List<DishList> dishLists = jdbcTemplate.query(sql, rowMapper);//最后一个参数为id值
+//        System.out.println(s);
 
         return dishLists;
     }

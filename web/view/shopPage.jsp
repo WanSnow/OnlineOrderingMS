@@ -15,38 +15,45 @@
     <title>店铺页面</title>
     <script src="/js/jquery.js"></script>
     <script>
-        $(function () {
-            $(".updateDish").on('click', function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/updateDishList",
-                    type: 'POST',
-                    data: {'dishId': $("#dish_id").val(),
-                        'shopId': ${sessionScope.shop.getShopId()},
-                        "dish_name":$("#dish_name").val(),
-                        "price":$("#price").val(),
-                        "dishImage":$("#dish_image").val(),
-                    },
-                    success: function (data) {
-                        alert(data);
-                        window.location.reload();
-                    }
-                });
-            })
-        });
 
-        $(function () {
-            $(".deleteDish").on('click', function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/deleteDishList",
-                    type: 'Post',
-                    success: function (data) {
-                        alert(data);
-                        window.location.reload();
-                    }
-                });
+        function updateDish(dishId) {
+            $(function(){$.ajax({
+                url: "${pageContext.request.contextPath}/updateDishListPage",
+                type: 'POST',
+                data: {'dishId': dishId
+                },
+                success: function () {
+                    window.location.href = "${pageContext.request.contextPath}/editDishListPage";
+                }
             })
-        });
+            });
 
+        }
+
+        function addDish(shopId) {
+            $(function(){$.ajax({
+                url: "${pageContext.request.contextPath}/newDishList",
+                type: 'POST',
+                data:{'shopId':shopId},
+                success: function () {
+                    window.location.href = "${pageContext.request.contextPath}/editDishListPage";
+                }
+            })
+            });
+        }
+
+        function deleteDish(dishId) {
+            $(function(){$.ajax({
+                url: "${pageContext.request.contextPath}/deleteDishList",
+                type: 'POST',
+                data:{'dishId':dishId},
+                success: function (data) {
+                    alert(data)
+                    window.location.reload();
+                }
+            })
+            });
+        }
     </script>
 </head>
 <body>
@@ -62,28 +69,31 @@
     <div>
         <div>
             <%--            浏览/修改菜单--%>
-                <div>
-                    <%--                浏览修改菜单--%>
-                    <%
-                        List<DishList> dishLists = (List<DishList>) session.getAttribute("dishLists");
-                        for(int i=1;i<=dishLists.size();i++){
-                    %>
-                    <input type="image" src="<%=dishLists.get(i).getDishImage()%>" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishImage()%>">
-                    菜品ID：<label id="dish_id_<%=i%>"><%=dishLists.get(i).getDishId()%></label>
-                    菜名：<input type="text" id="dish_name_<%=i%>" value="<%=dishLists.get(i).getDishName()%>">
-                    价格：<input type="text" id="price_<%=i%>" value="<%=dishLists.get(i).getPrice()%>">
-                    <a href="#" id="updateDish_<%=i%>" class="updateDish">修改</a>
-                    <a href="#" id="deleteDish_<%=i%>" class="deleteDish">删除</a>
-                    <%
-                        }
-                    %>
-                </div>
-                <div>
-                    <%--                    增加菜品--%>
-                    菜名：<input type="text" id="new_dish_id"><br>
-                    价格：<br>
-                    图片：<br>
-                </div>
+            <div>
+                <%--                浏览修改菜单--%>
+                <%
+                    List<DishList> dishLists = (List<DishList>) session.getAttribute("dishLists");
+                    for(int i=0;i<dishLists.size();i++){
+                %>
+                <input type="image" src="<%=dishLists.get(i).getDishImage()%>"><br>
+                    <input type="hidden" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
+                菜品ID：<%=dishLists.get(i).getDishId()%><br>
+                    <input type="hidden" id="dish_id_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
+                菜名：<%=dishLists.get(i).getDishName()%><br>
+                    <input type="hidden" id="dish_name_<%=i%>" value="<%=dishLists.get(i).getDishName()%>">
+                价格：<%=dishLists.get(i).getPrice()%><br>
+                    <input type="hidden" id="price_<%=i%>" value="<%=dishLists.get(i).getPrice()%>">
+                <input type="submit" id="update_dish_<%=i%>" value="修改" onclick="updateDish('<%=dishLists.get(i).getDishId()%>')">
+                <input type="submit" id="delete_dish_<%=i%>" value="删除" onclick="deleteDish('<%=dishLists.get(i).getDishId()%>')">
+                    <hr>
+                <%
+                    }
+                %>
+            </div>
+            <div>
+                <%--                    增加菜品--%>
+                <input type="button" id="add_dish" value="增加菜品" onclick="addDish('<%=shop.getShopId()%>')">
+            </div>
             <div>
 
             </div>
