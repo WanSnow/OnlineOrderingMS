@@ -1,14 +1,18 @@
 package com.wansnow.ordering.dao;
 
 import com.wansnow.ordering.dao.impl.ShopDaoImpl;
+import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ShopDao implements ShopDaoImpl {
@@ -24,6 +28,24 @@ public class ShopDao implements ShopDaoImpl {
             public void processRow(ResultSet resultSet) throws SQLException {
                 shop.setShopId(resultSet.getString("shop_id"));
                 shop.setPwd(resultSet.getString("pwd"));
+                shop.setShopName(resultSet.getString("shop_name"));
+                shop.setOwnerName(resultSet.getString("owner_name"));
+                shop.setTel(resultSet.getString("tel"));
+                shop.setAddr(resultSet.getString("addr"));
+                shop.setVerify(resultSet.getBoolean("is_verify"));
+            }
+        });
+        return shop;
+    }
+
+    @Override
+    public Shop findShopById(String shopId) {
+        Shop shop = new Shop();
+        String sql = "SELECT * FROM shop WHERE shop_id=?";
+        jdbcTemplate.query(sql, new Object[]{shopId}, new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                shop.setShopId(resultSet.getString("shop_id"));
                 shop.setShopName(resultSet.getString("shop_name"));
                 shop.setOwnerName(resultSet.getString("owner_name"));
                 shop.setTel(resultSet.getString("tel"));
@@ -60,5 +82,14 @@ public class ShopDao implements ShopDaoImpl {
                 shop.isVerify(),
                 shop.getShopId()
         );
+    }
+
+    @Override
+    public List<Shop> getAllShops() {
+        String sql = "select * from shop";
+        RowMapper<Shop> rowMapper = new BeanPropertyRowMapper<>(Shop.class);
+        List<Shop> shops = jdbcTemplate.query(sql, rowMapper);
+
+        return shops;
     }
 }

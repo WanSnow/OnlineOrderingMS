@@ -16,6 +16,14 @@ public class ShopServiceImpl {
     @Autowired
     private DishListDao dishListDao;
 
+    public List<Shop> getAllShops(){
+        return shopDao.getAllShops();
+    }
+
+    public Shop getShop(String shopId){
+        return shopDao.findShopById(shopId);
+    }
+
     public Shop login(String shopId, String pwd){
         return shopDao.findShopByIdAndPwd(shopId, pwd);
     }

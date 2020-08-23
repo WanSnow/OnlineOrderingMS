@@ -4,8 +4,10 @@ import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.Shop;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +29,12 @@ public class ShopController {
     private SnowFlake dishIdGenerator;
     @Resource(name = "order")
     private SnowFlake orderIdGenerator;
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String index(){
+        session.setAttribute("shops", shopService.getAllShops());
+        return "index";
+    }
 
     @RequestMapping(path = "/shop", method = RequestMethod.GET)
     public String shop(){
@@ -164,5 +172,12 @@ public class ShopController {
         }else {
             return "删除失败！";
         }
+    }
+
+    @RequestMapping(path = "/shopView/{shopId}", method = RequestMethod.GET)
+    public String shopView(@PathVariable String shopId){
+        session.setAttribute("shopView", shopService.getShop(shopId));
+        session.setAttribute("dishView", shopService.getAllDish(shopId));
+        return "shopView";
     }
 }

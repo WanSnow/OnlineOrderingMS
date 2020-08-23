@@ -7,6 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.wansnow.ordering.entity.User" %>
+<%@ page import="com.wansnow.ordering.entity.Shop" %>
+<%@ page import="com.wansnow.ordering.service.ShopServiceImpl" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="com.wansnow.ordering.dao.ShopDao" %>
+<%@ page import="com.wansnow.ordering.dao.impl.ShopDaoImpl" %>
 <html>
 <head>
   <title>网上订餐管理系统</title>
@@ -38,13 +44,13 @@
         });
       })
     });
-
   </script>
 </head>
 <body>
 <%--  头部：用户登录注册--%>
 <div>
   <%
+    List<Shop> shops = (List<Shop>) session.getAttribute("shops");
     User user = (User)session.getAttribute("user");
     if(user == null) {
   %>
@@ -63,6 +69,15 @@
 </div>
 <hr>
 <%--  主屏：--%>
-<hr>
+<div id="shopView">
+<%--  浏览店铺--%>
+  <%
+    for(Shop shop:shops){
+  %>
+  <a href="${pageContext.request.contextPath}/shopView/<%=shop.getShopId()%>"><%=shop.getShopName()%></a><hr>
+  <%
+    }
+  %>
+</div>
 </body>
 </html>
