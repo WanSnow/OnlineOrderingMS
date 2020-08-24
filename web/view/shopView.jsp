@@ -25,7 +25,7 @@
         }
     %>
     <br>
-    <a href="" >我要点餐</a>
+    <a href="${pageContext.request.contextPath}/orderView" >我要点餐</a>
 </div>
 </body>
 </html>

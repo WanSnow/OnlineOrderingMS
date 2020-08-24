@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>编辑菜品</title>
-    <script src="/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script>
         $(function () {
             $("#updateDishList").on('click', function () {

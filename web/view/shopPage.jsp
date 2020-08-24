@@ -13,7 +13,7 @@
 <html>
 <head>
     <title>店铺页面</title>
-    <script src="/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script>
 
         function updateDish(dishId) {

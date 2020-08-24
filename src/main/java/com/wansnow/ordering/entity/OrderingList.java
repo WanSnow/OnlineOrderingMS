@@ -1,22 +1,22 @@
 package com.wansnow.ordering.entity;
 
 public class OrderingList {
-    private String id;//订单号，主键
+    private String orderingId;//订单号，主键
     private String shopId;//店铺id
     private String shopName;//店铺名字
     private String email;//订单人邮箱
-    private String name;//订单人姓名
+    private String realName;//订单人姓名
     private String tel;//订单电话号码
     private String appointmentTime;//订餐时间
     private String orderList;//json格式，菜单
     private Boolean isOrdering;//订单是否被确认
 
-    public OrderingList(String id, String shopId, String shopName, String email, String name, String tel, String appointmentTime, String orderList, Boolean isOrdering) {
-        this.id = id;
+    public OrderingList(String orderingId, String shopId, String shopName, String email, String realName, String tel, String appointmentTime, String orderList, Boolean isOrdering) {
+        this.orderingId = orderingId;
         this.shopId = shopId;
         this.shopName = shopName;
         this.email = email;
-        this.name = name;
+        this.realName = realName;
         this.tel = tel;
         this.appointmentTime = appointmentTime;
         this.orderList = orderList;
@@ -34,20 +34,20 @@ public class OrderingList {
         this.appointmentTime = appointmentTime;
     }
 
-    public String getId() {
-        return id;
+    public String getOrderingId() {
+        return orderingId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOrderingId(String orderingId) {
+        this.orderingId = orderingId;
     }
 
-    public String getName() {
-        return name;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getTel() {

@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>注册</title>
-    <script src="/js/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script>
         $(function () {
             $("#submit").on('click', function () {

@@ -1,6 +1,7 @@
 package com.wansnow.ordering.controller;
 
 import com.wansnow.ordering.entity.DishList;
+import com.wansnow.ordering.entity.OrderingList;
 import com.wansnow.ordering.entity.Shop;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
@@ -21,15 +22,12 @@ public class ShopController {
     private HttpSession session;
     @Autowired
     private ShopServiceImpl shopService;
-
-    //下面是servlet
     @Resource(name = "shop")
     private SnowFlake shopIdGenerator;
     @Resource(name = "dish")
     private SnowFlake dishIdGenerator;
-    @Resource(name = "order")
-    private SnowFlake orderIdGenerator;
 
+    //下面是servlet
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String index(){
         session.setAttribute("shops", shopService.getAllShops());
@@ -174,10 +172,4 @@ public class ShopController {
         }
     }
 
-    @RequestMapping(path = "/shopView/{shopId}", method = RequestMethod.GET)
-    public String shopView(@PathVariable String shopId){
-        session.setAttribute("shopView", shopService.getShop(shopId));
-        session.setAttribute("dishView", shopService.getAllDish(shopId));
-        return "shopView";
-    }
 }

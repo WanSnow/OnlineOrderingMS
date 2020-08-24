@@ -16,7 +16,7 @@
 <html>
 <head>
   <title>网上订餐管理系统</title>
-  <script src="/js/jquery.js"></script>
+  <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
   <script>
     $(function () {
       $("#btn-login").on('click', function () {
@@ -61,12 +61,15 @@
   } else {
   %>
   您好,<%= user.getUsername() %>。
+    <a href="" id="user_page">个人中心</a>
   <a href="logout" id="logout">退出登录</a>
   <%
     }
   %>
   <a href="${pageContext.request.contextPath}/shop" >查看店铺</a>
 </div>
+<hr>
+餐厅：
 <hr>
 <%--  主屏：--%>
 <div id="shopView">
