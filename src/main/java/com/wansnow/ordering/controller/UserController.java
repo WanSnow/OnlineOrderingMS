@@ -1,6 +1,7 @@
 package com.wansnow.ordering.controller;
 
 import com.wansnow.ordering.entity.User;
+import com.wansnow.ordering.service.OrderingServiceImpl;
 import com.wansnow.ordering.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,10 @@ public class UserController {
     private HttpSession session;
 
     @Autowired
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
+
+    @Autowired
+    private OrderingServiceImpl orderingService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -82,6 +86,62 @@ public class UserController {
             return "false";
         }
 
+    }
+
+    @RequestMapping(path = "/userPage", method = RequestMethod.GET)
+    public String userPage(){
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("userOrdering", orderingService.getAllOrderingListByEmail(user.getEmail()));
+        return "userPage";
+    }
+
+    @RequestMapping(path = "/updateUserInfo", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateUserInfo(User user){
+        if(user.getUsername()==null){
+            return "用户名不能为空！";
+        }
+        if(user.getRealName()==null){
+            return "姓名不能为空！";
+        }
+        if(user.getTel()==null||user.getTel().length()!=11){
+            return "电话格式不对！";
+        }
+        if(userService.updateUserInfo(user)){
+            session.setAttribute("user", user);
+            return "修改成功！";
+        }else {
+            return "修改失败！";
+        }
+    }
+
+    @RequestMapping(path = "/updateUserPwdPage", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    public String updateUserPwdPage() {
+        return "updateUserPwdPage";
+    }
+
+    @RequestMapping(path = "/updateUserPwd", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateUserPwd(String email, String oldPwd, String newPwd, String newPwd2){
+        if(oldPwd==null){
+            return "请输入旧密码！";
+        }
+        if(newPwd==null){
+            return "新密码不能为空！";
+        }
+        if(newPwd2==null||!newPwd.equals(newPwd2)){
+            return "两次密码不对！";
+        }
+        if(userService.login(email,oldPwd)!=null){
+            if(userService.updateUserPwd(email, newPwd)){
+                session.removeAttribute("user");
+                return "true";
+            }else {
+                return "密码修改失败！";
+            }
+        }else {
+            return "密码不正确！";
+        }
     }
 
     //正则表达式

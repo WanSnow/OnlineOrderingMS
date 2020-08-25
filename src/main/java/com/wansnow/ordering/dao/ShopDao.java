@@ -1,13 +1,11 @@
 package com.wansnow.ordering.dao;
 
 import com.wansnow.ordering.dao.impl.ShopDaoImpl;
-import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -87,7 +85,18 @@ public class ShopDao implements ShopDaoImpl {
     @Override
     public List<Shop> getAllShops() {
         String sql = "select * from shop";
-        RowMapper<Shop> rowMapper = new BeanPropertyRowMapper<>(Shop.class);
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(){
+            public Object mapRow(ResultSet rs,int index) throws SQLException{
+                Shop shop = new Shop();
+                shop.setShopId(rs.getString("shop_id"));
+                shop.setShopName(rs.getString("shop_name"));
+                shop.setOwnerName(rs.getString("owner_name"));
+                shop.setTel(rs.getString("tel"));
+                shop.setAddr(rs.getString("addr"));
+                shop.setVerify(rs.getBoolean("is_verify"));
+                return shop;
+            }
+        };
         List<Shop> shops = jdbcTemplate.query(sql, rowMapper);
 
         return shops;

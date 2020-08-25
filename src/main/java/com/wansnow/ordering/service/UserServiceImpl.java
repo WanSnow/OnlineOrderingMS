@@ -25,4 +25,12 @@ public class UserServiceImpl {
         }
         return userDao.insertUser(user) != 0;
     }
+
+    public boolean updateUserInfo(User user){
+        return userDao.updateUserInfo(user)!=0;
+    }
+
+    public boolean updateUserPwd(String email, String newPwd){
+        return userDao.updateUserPwd(email, newPwd)!=0;
+    }
 }

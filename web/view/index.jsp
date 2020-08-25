@@ -61,7 +61,7 @@
   } else {
   %>
   您好,<%= user.getUsername() %>。
-    <a href="" id="user_page">个人中心</a>
+    <a href="userPage" id="user_page">个人中心</a>
   <a href="logout" id="logout">退出登录</a>
   <%
     }
@@ -76,9 +76,11 @@
 <%--  浏览店铺--%>
   <%
     for(Shop shop:shops){
+      if(shop.isVerify()){
   %>
   <a href="${pageContext.request.contextPath}/shopView/<%=shop.getShopId()%>"><%=shop.getShopName()%></a><hr>
   <%
+      }
     }
   %>
 </div>

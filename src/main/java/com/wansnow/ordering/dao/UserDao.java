@@ -62,14 +62,22 @@ public class UserDao implements UserDaoImpl {
     }
 
     @Override
-    public int updateUser(User user) {
-        String sql = "UPDATE user set pwd = ?,username = ?,real_name = ?,tel = ? WHERE email = ?";
+    public int updateUserInfo(User user) {
+        String sql = "UPDATE user set username = ?,real_name = ?,tel = ? WHERE email = ?";
         return jdbcTemplate.update(sql,
-                user.getPwd(),
                 user.getUsername(),
                 user.getRealName(),
                 user.getTel(),
                 user.getEmail()
+        );
+    }
+
+    @Override
+    public int updateUserPwd(String email, String pwd) {
+        String sql = "UPDATE user set pwd = ? WHERE email = ?";
+        return jdbcTemplate.update(sql,
+                pwd,
+                email
         );
     }
 }

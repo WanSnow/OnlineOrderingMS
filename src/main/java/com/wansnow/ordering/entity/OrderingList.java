@@ -9,7 +9,7 @@ public class OrderingList {
     private String tel;//订单电话号码
     private String appointmentTime;//订餐时间
     private String orderList;//json格式，菜单
-    private Boolean isOrdering;//订单是否被确认
+    private boolean isOrdering;//订单是否被确认
 
     public OrderingList(String orderingId, String shopId, String shopName, String email, String realName, String tel, String appointmentTime, String orderList, Boolean isOrdering) {
         this.orderingId = orderingId;
@@ -66,11 +66,11 @@ public class OrderingList {
         this.orderList = orderList;
     }
 
-    public Boolean getOrdering() {
+    public boolean isOrdering() {
         return isOrdering;
     }
 
-    public void setOrdering(Boolean ordering) {
+    public void setOrdering(boolean ordering) {
         isOrdering = ordering;
     }
 

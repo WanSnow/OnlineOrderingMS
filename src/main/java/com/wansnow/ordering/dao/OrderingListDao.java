@@ -42,7 +42,21 @@ public class OrderingListDao implements OrderingListDaoImpl {
     @Override
     public List<OrderingList> findOrderingListByShopId(String shopId) {
         String sql = "select * from ordering_list where shop_id = ?";
-        RowMapper<OrderingList> rowMapper = new BeanPropertyRowMapper<>(OrderingList.class);
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(){
+            public Object mapRow(ResultSet rs,int index) throws SQLException{
+                OrderingList orderingList = new OrderingList();
+                orderingList.setOrderingId(rs.getString("ordering_id"));
+                orderingList.setShopId(rs.getString("shop_id"));
+                orderingList.setShopName(rs.getString("shop_name"));
+                orderingList.setEmail(rs.getString("email"));
+                orderingList.setRealName(rs.getString("real_name"));
+                orderingList.setAppointmentTime(rs.getString("appointment_time"));
+                orderingList.setTel(rs.getString("tel"));
+                orderingList.setOrderList(rs.getString("order_list"));
+                orderingList.setOrdering(rs.getBoolean("is_ordering"));
+                return orderingList;
+            }
+        };
         List<OrderingList> orderingLists = jdbcTemplate.query(sql, rowMapper,shopId);
         return orderingLists;
     }
@@ -50,7 +64,21 @@ public class OrderingListDao implements OrderingListDaoImpl {
     @Override
     public List<OrderingList> findOrderingListByEmail(String email) {
         String sql = "select * from ordering_list where email = ?";
-        RowMapper<OrderingList> rowMapper = new BeanPropertyRowMapper<>(OrderingList.class);
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(){
+            public Object mapRow(ResultSet rs,int index) throws SQLException{
+                OrderingList orderingList = new OrderingList();
+                orderingList.setOrderingId(rs.getString("ordering_id"));
+                orderingList.setShopId(rs.getString("shop_id"));
+                orderingList.setShopName(rs.getString("shop_name"));
+                orderingList.setEmail(rs.getString("email"));
+                orderingList.setRealName(rs.getString("real_name"));
+                orderingList.setAppointmentTime(rs.getString("appointment_time"));
+                orderingList.setTel(rs.getString("tel"));
+                orderingList.setOrderList(rs.getString("order_list"));
+                orderingList.setOrdering(rs.getBoolean("is_ordering"));
+                return orderingList;
+            }
+        };
         List<OrderingList> orderingLists = jdbcTemplate.query(sql, rowMapper,email);
         return orderingLists;
     }
@@ -67,7 +95,7 @@ public class OrderingListDao implements OrderingListDaoImpl {
                 list.getAppointmentTime(),
                 list.getTel(),
                 list.getOrderList(),
-                list.getOrdering()
+                list.isOrdering()
         );
     }
 
