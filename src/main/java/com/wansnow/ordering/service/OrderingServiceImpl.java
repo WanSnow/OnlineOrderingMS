@@ -28,6 +28,10 @@ public class OrderingServiceImpl {
         return orderingListDao.insertOrdering(orderingList)!=0;
     }
 
+    public boolean confirmOrderingList(String orderingId){
+        return orderingListDao.confirmOrdering(orderingId)!=0;
+    }
+
     public boolean deleteOrderingList(String orderingId){
         return orderingListDao.deleteOrdering(orderingId)!=0;
     }

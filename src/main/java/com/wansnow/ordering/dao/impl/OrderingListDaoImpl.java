@@ -10,4 +10,5 @@ public interface OrderingListDaoImpl {
     List<OrderingList> findOrderingListByEmail(String email);
     int insertOrdering(OrderingList list);
     int deleteOrdering(String  orderingId);
+    int confirmOrdering(String orderingId);
 }

@@ -54,6 +54,19 @@
             })
             });
         }
+
+        function confirmOrderingList(ordering_list_id) {
+            $(function(){$.ajax({
+                url: "${pageContext.request.contextPath}/confirmOrderingList",
+                type: 'POST',
+                data:{'orderingListId':ordering_list_id},
+                success: function (data) {
+                    alert(data)
+                    window.location.reload();
+                }
+            })
+            });
+        }
     </script>
 </head>
 <body>
@@ -69,6 +82,8 @@
     <div>
         <div>
             <%--            浏览/修改菜单--%>
+            菜单
+            <hr>
             <div>
                 <%--                浏览修改菜单--%>
                 <%
@@ -76,16 +91,16 @@
                     for(int i=0;i<dishLists.size();i++){
                 %>
                 <input type="image" src="<%=dishLists.get(i).getDishImage()%>"><br>
-                    <input type="hidden" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
+                <input type="hidden" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
                 菜品ID：<%=dishLists.get(i).getDishId()%><br>
-                    <input type="hidden" id="dish_id_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
+                <input type="hidden" id="dish_id_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
                 菜名：<%=dishLists.get(i).getDishName()%><br>
-                    <input type="hidden" id="dish_name_<%=i%>" value="<%=dishLists.get(i).getDishName()%>">
+                <input type="hidden" id="dish_name_<%=i%>" value="<%=dishLists.get(i).getDishName()%>">
                 价格：<%=dishLists.get(i).getPrice()%><br>
-                    <input type="hidden" id="price_<%=i%>" value="<%=dishLists.get(i).getPrice()%>">
+                <input type="hidden" id="price_<%=i%>" value="<%=dishLists.get(i).getPrice()%>">
                 <input type="submit" id="update_dish_<%=i%>" value="修改" onclick="updateDish('<%=dishLists.get(i).getDishId()%>')">
                 <input type="submit" id="delete_dish_<%=i%>" value="删除" onclick="deleteDish('<%=dishLists.get(i).getDishId()%>')">
-                    <hr>
+                <hr>
                 <%
                     }
                 %>
@@ -98,8 +113,34 @@
 
             </div>
         </div>
+        <hr>
+        订单
+        <hr>
         <div>
-            浏览/审批订单
+            <%--            浏览/审批订单--%>
+            <%
+                List<OrderingList> orderingLists = (List<OrderingList>) session.getAttribute("shopOrderingList");
+                for(OrderingList orderingList:orderingLists){
+            %>
+            订单ID：<%=orderingList.getOrderingId()%>
+            <input type="hidden" id="ordering_id" value="<%=orderingList.getOrderingId()%>"><br>
+            预定时间：<%=orderingList.getAppointmentTime()%><br>
+            订单人：<%=orderingList.getRealName()%><br>
+            订单人电话：<%=orderingList.getTel()%><br>
+            订单内容：<%=orderingList.getOrderList()%><br>
+            是否已确认：<%=orderingList.isOrdering()%><br>
+            <%
+                if(!orderingList.isOrdering()){
+            %>
+            <input type="button" value="确认订单" onclick="confirmOrderingList('<%=orderingList.getOrderingId()%>')">
+            <%
+                }
+            %>
+            <hr>
+            <%
+                }
+            %>
+
         </div>
         <div>
             浏览/修改店铺信息

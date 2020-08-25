@@ -2,6 +2,7 @@ package com.wansnow.ordering.controller;
 
 import com.wansnow.ordering.dao.OrderingListDao;
 import com.wansnow.ordering.entity.OrderingList;
+import com.wansnow.ordering.entity.Shop;
 import com.wansnow.ordering.service.OrderingServiceImpl;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
@@ -48,5 +49,18 @@ public class OrderingController {
             return "订单已提交，请等待审核！";
         }
         return "订单提交失败！请稍后尝试！";
+    }
+
+    @RequestMapping(path = "/confirmOrderingList", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String confirmOrderingList(String orderingListId){
+        if(orderingService.confirmOrderingList(orderingListId)){
+            Shop shop = (Shop) session.getAttribute("shop");
+            session.setAttribute("shopOrderingList", orderingService.getAllOrderingListByShopId(shop.getShopId()));
+            return "订单已确认！";
+        }else {
+            return "确认失败！";
+        }
+
     }
 }

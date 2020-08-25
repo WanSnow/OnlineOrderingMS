@@ -3,6 +3,7 @@ package com.wansnow.ordering.controller;
 import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.OrderingList;
 import com.wansnow.ordering.entity.Shop;
+import com.wansnow.ordering.service.OrderingServiceImpl;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -22,6 +23,8 @@ public class ShopController {
     private HttpSession session;
     @Autowired
     private ShopServiceImpl shopService;
+    @Autowired
+    private OrderingServiceImpl orderingService;
     @Resource(name = "shop")
     private SnowFlake shopIdGenerator;
     @Resource(name = "dish")
@@ -62,6 +65,7 @@ public class ShopController {
         if(shop!=null&&shop.getShopId()!=null&&shop.getShopId()!=""){
             session.setAttribute("shop",shop);
             session.setAttribute("dishLists",shopService.getAllDish(shopId));
+            session.setAttribute("shopOrderingList", orderingService.getAllOrderingListByShopId(shopId));
             return "登录成功！";
         }else {
             return "店铺ID或密码错误！";

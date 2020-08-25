@@ -105,5 +105,11 @@ public class OrderingListDao implements OrderingListDaoImpl {
         return jdbcTemplate.update(sql,orderingId);
     }
 
+    @Override
+    public int confirmOrdering(String orderingId) {
+        String sql = "update ordering_list set is_ordering = true where ordering_id = ?";
+        return jdbcTemplate.update(sql,orderingId);
+    }
+
 
 }
