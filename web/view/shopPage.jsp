@@ -67,6 +67,28 @@
             })
             });
         }
+
+        $(function(){
+            $("#update_shop_info").on('click',function () {
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/updateShopInfo',
+                    type:'post',
+                    data:{
+                        'shopId':$('#shop_id').val(),
+                        'pwd':'',
+                        'shopName':$('#shop_name').val(),
+                        'ownerName':$('#owner_name').val(),
+                        'tel':$('#tel').val(),
+                        'addr':$('#addr').val(),
+                        'isVerify':true
+                    },
+                    success:function (data) {
+                        alert(data);
+                        window.location.reload();
+                    }
+                });
+            })
+        });
     </script>
 </head>
 <body>
@@ -82,7 +104,7 @@
     <div>
         <div>
             <%--            浏览/修改菜单--%>
-            菜单
+            <h3>菜单</h3>
             <hr>
             <div>
                 <%--                浏览修改菜单--%>
@@ -91,7 +113,7 @@
                     for(int i=0;i<dishLists.size();i++){
                 %>
                 <input type="image" src="<%=dishLists.get(i).getDishImage()%>"><br>
-                <input type="hidden" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
+                <input type="hidden" id="dish_image_<%=i%>" value="<%=dishLists.get(i).getDishImage()%>">
                 菜品ID：<%=dishLists.get(i).getDishId()%><br>
                 <input type="hidden" id="dish_id_<%=i%>" value="<%=dishLists.get(i).getDishId()%>">
                 菜名：<%=dishLists.get(i).getDishName()%><br>
@@ -114,7 +136,7 @@
             </div>
         </div>
         <hr>
-        订单
+        <h3>订单</h3>
         <hr>
         <div>
             <%--            浏览/审批订单--%>
@@ -143,7 +165,16 @@
 
         </div>
         <div>
-            浏览/修改店铺信息
+            <%--            浏览/修改店铺信息--%>
+            <h3>店铺信息：</h3>
+            <hr>
+            <input type="hidden" id="shop_id" value="<%=shop.getShopId()%>">
+            店铺名：<input type="text" id="shop_name" value="<%=shop.getShopName()%>"><br>
+            店主：<input type="text" id="owner_name" value="<%=shop.getOwnerName()%>"><br>
+            电话：<input type="text" id="tel" value="<%=shop.getTel()%>"><br>
+            地址：<input type="text" id="addr" value="<%=shop.getAddr()%>"><br>
+            <input type="submit" value="修改店铺信息" id="update_shop_info"><br>
+            <a href="updateShopPwdPage">修改密码</a>
         </div>
     </div>
     <%

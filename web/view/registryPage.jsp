@@ -24,12 +24,12 @@
                         'pwd2':$("#pwd2").val()
                     },
                     success: function (data) {
-                        if(data=="false"){
-                            alert("注册失败！");
-                            window.location.reload();
+                        if(data=="true"){
+                            alert("注册成功！");
+                            window.location.href = "${pageContext.request.contextPath}/";
                         }else {
                             alert(data);
-                            window.location.href = "${pageContext.request.contextPath}";
+                            window.location.reload();
                         }
 
                     }

@@ -10,4 +10,6 @@ public interface ShopDaoImpl {
     int insertShop(Shop shop);
     int updateShop(Shop shop);
     List<Shop> getAllShops();
+    int updateShopPwd(String shopId, String newPwd);
+    int confirmShop(String shopId);
 }

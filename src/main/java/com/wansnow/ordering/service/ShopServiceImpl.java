@@ -49,4 +49,16 @@ public class ShopServiceImpl {
     public boolean deleteDishList(String dishId){
         return dishListDao.deleteDishList(dishId)!=0;
     }
+
+    public boolean updateShopPwd(String shopId, String pwd){
+        return shopDao.updateShopPwd(shopId,pwd)!=0;
+    }
+
+    public boolean updateShopInfo(Shop shop){
+        return shopDao.updateShop(shop)!=0;
+    }
+
+    public boolean confirmShop(String shopId){
+        return shopDao.confirmShop(shopId)!=0;
+    }
 }

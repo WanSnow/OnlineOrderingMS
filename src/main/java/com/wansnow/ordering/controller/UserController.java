@@ -81,9 +81,9 @@ public class UserController {
         boolean isRegistry = userService.register(user);
         if(isRegistry){
             session.setAttribute("user",user);
-            return "注册成功!";
+            return "true";
         }else {
-            return "false";
+            return "注册失败！";
         }
 
     }

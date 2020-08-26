@@ -70,14 +70,12 @@ public class ShopDao implements ShopDaoImpl {
 
     @Override
     public int updateShop(Shop shop) {
-        String sql = "UPDATE shop set pwd = ?,shop_name = ?,owner_name = ?,tel = ?,addr = ?,is_verify = ? WHERE shop_id = ?";
+        String sql = "UPDATE shop set shop_name = ?,owner_name = ?,tel = ?,addr = ? WHERE shop_id = ?";
         return jdbcTemplate.update(sql,
-                shop.getPwd(),
                 shop.getShopName(),
                 shop.getOwnerName(),
                 shop.getTel(),
                 shop.getAddr(),
-                shop.isVerify(),
                 shop.getShopId()
         );
     }
@@ -100,5 +98,20 @@ public class ShopDao implements ShopDaoImpl {
         List<Shop> shops = jdbcTemplate.query(sql, rowMapper);
 
         return shops;
+    }
+
+    @Override
+    public int updateShopPwd(String shopId, String newPwd) {
+        String sql = "UPDATE shop set pwd = ? WHERE shop_id = ?";
+        return jdbcTemplate.update(sql,
+                newPwd,
+                shopId
+        );
+    }
+
+    @Override
+    public int confirmShop(String shopId) {
+        String sql = "update shop set is_verify = true where shop_id = ?";
+        return jdbcTemplate.update(sql,shopId);
     }
 }

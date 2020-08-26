@@ -57,6 +57,7 @@
 <hr>
 <div>
 <%--    订单--%>
+    <h3>订单</h3>
     <%
         for(OrderingList orderingList:orderingLists){
     %>
@@ -67,6 +68,7 @@
     菜单：<br>
     <%=orderingList.getOrderList()%><br>
     餐厅是否确认:<%=orderingList.isOrdering()%>
+    <hr>
     <%
         }
     %>

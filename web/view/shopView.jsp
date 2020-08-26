@@ -15,12 +15,14 @@
 <body>
 <div>
     店名：${sessionScope.shopView.getShopName()}<br>
-    地址：${sessionScope.shopView.getAddr()}<br>
+    地址：${sessionScope.shopView.getAddr()}<br><br><br>
     菜单：<br>
     <%
         for(DishList dishList : (List<DishList>)session.getAttribute("dishView")){
     %>
-        <%=dishList.getDishName()%><br>
+    <hr>
+    菜名：<%=dishList.getDishName()%><br>
+    价格：<%=dishList.getPrice()%><br>
     <%
         }
     %>

@@ -3,12 +3,14 @@ package com.wansnow.ordering.dao;
 import com.wansnow.ordering.dao.impl.UserDaoImpl;
 import com.wansnow.ordering.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class UserDao implements UserDaoImpl {
@@ -48,6 +50,26 @@ public class UserDao implements UserDaoImpl {
         });
         return user;
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        String sql = "select * from user";
+        BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper(){
+            public Object mapRow(ResultSet rs,int index) throws SQLException{
+                User user = new User();
+                user.setEmail(rs.getString("email"));
+                user.setPwd(rs.getString("pwd"));
+                user.setUsername(rs.getString("username"));
+                user.setRealName(rs.getString("real_name"));
+                user.setTel(rs.getString("tel"));
+                return user;
+            }
+        };
+        List<User> users = jdbcTemplate.query(sql, rowMapper);
+
+        return users;
+    }
+
 
     @Override
     public int insertUser(User user) {

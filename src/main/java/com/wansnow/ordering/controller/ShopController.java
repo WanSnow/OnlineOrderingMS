@@ -3,6 +3,7 @@ package com.wansnow.ordering.controller;
 import com.wansnow.ordering.entity.DishList;
 import com.wansnow.ordering.entity.OrderingList;
 import com.wansnow.ordering.entity.Shop;
+import com.wansnow.ordering.entity.User;
 import com.wansnow.ordering.service.OrderingServiceImpl;
 import com.wansnow.ordering.service.ShopServiceImpl;
 import com.wansnow.ordering.utils.SnowFlake;
@@ -173,6 +174,59 @@ public class ShopController {
             return "删除成功！";
         }else {
             return "删除失败！";
+        }
+    }
+
+    @RequestMapping(path = "/updateShopInfo", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateShopInfo(Shop shop){
+        if(shop.getShopName()==null){
+            return "店名不能为空！";
+        }
+        if(shop.getOwnerName()==null){
+            return "店主名不能为空！";
+        }
+        if(shop.getTel()==null||shop.getTel().length()!=11){
+            return "电话格式不对！";
+        }
+        if(shop.getAddr()==null){
+            return "地址不能为空！";
+        }
+        shop.setVerify(true);
+        if(shopService.updateShopInfo(shop)){
+            session.setAttribute("shop", shop);
+            return "修改成功！";
+        }else {
+            return "修改失败！";
+        }
+    }
+
+    @RequestMapping(path = "/updateShopPwdPage", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    public String updateUserPwdPage() {
+        return "updateShopPwdPage";
+    }
+
+    @RequestMapping(path = "/updateShopPwd", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String updateShopPwd(String shopId, String oldPwd, String newPwd, String newPwd2){
+        if(oldPwd==null){
+            return "请输入旧密码！";
+        }
+        if(newPwd==null){
+            return "新密码不能为空！";
+        }
+        if(newPwd2==null||!newPwd.equals(newPwd2)){
+            return "两次密码不对！";
+        }
+        if(shopService.login(shopId, oldPwd)!=null){
+            if(shopService.updateShopPwd(shopId, newPwd)){
+                session.removeAttribute("shop");
+                return "true";
+            }else {
+                return "密码修改失败！";
+            }
+        }else {
+            return "密码不正确！";
         }
     }
 
