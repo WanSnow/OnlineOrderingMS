@@ -1,6 +1,10 @@
 package com.wansnow.ordering.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private static final long serialVersionUID = -2217623007623220952L;
+
     private String email;//邮箱，主键
     private String pwd;//密码
     private String username;//用户名

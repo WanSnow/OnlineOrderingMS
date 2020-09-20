@@ -1,6 +1,10 @@
 package com.wansnow.ordering.entity;
 
-public class DishList {
+import java.io.Serializable;
+
+public class DishList implements Serializable {
+    private static final long serialVersionUID = -9033401295157820425L;
+
     private String dishId;
     private String shopId;
     private String dishName;

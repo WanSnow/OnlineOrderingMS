@@ -1,6 +1,10 @@
 package com.wansnow.ordering.entity;
 
-public class OrderingList {
+import java.io.Serializable;
+
+public class OrderingList implements Serializable {
+    private static final long serialVersionUID = 6250205198730886626L;
+
     private String orderingId;//订单号，主键
     private String shopId;//店铺id
     private String shopName;//店铺名字
