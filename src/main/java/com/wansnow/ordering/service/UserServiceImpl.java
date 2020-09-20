@@ -4,6 +4,8 @@ import com.wansnow.ordering.dao.UserDao;
 import com.wansnow.ordering.entity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,14 +29,17 @@ public class UserServiceImpl {
         return userDao.insertUser(user) != 0;
     }
 
+    @Cacheable(cacheNames = "allUsers", key = "\"all_users\"")
     public List<User> getAllUsers(){
         return userDao.getAllUsers();
     }
 
+    @CacheEvict(cacheNames = "userByEmail", key = "#user.email")
     public boolean updateUserInfo(User user){
         return userDao.updateUserInfo(user)!=0;
     }
 
+    @CacheEvict(cacheNames = "userByEmail", key = "#user.email")
     public boolean updateUserPwd(String email, String newPwd){
         return userDao.updateUserPwd(email, newPwd)!=0;
     }
